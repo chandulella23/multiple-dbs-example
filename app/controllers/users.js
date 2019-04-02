@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const Users = mongoose.model('users');
 const Comments = mongoose.model('comments');
 const Posts = mongoose.model('posts');
+var jwtService = require('./v1/auth')
 
 module.exports = {
     createUserDb: async (req, res) => {
@@ -43,7 +44,7 @@ module.exports = {
             })
 
             await userDataResponse.data.asyncForeach(async (user) => {
-                await require('./../../config/db')('user' + user.id);
+                await require('../../config/db')('user' + user.id);
                 console.log("user", user.id);
                 await postsResponse.data.asyncForeach(async (post) => {
                     if (user.id == post.userId) {
@@ -58,5 +59,33 @@ module.exports = {
         } catch (err) {
             res.json({ success: false, meassage: err.code })
         }
+    },
+
+    login: async (req, res) => {
+        try {
+          let data = req.body;
+          const user = await Users.find({ email: data.email , password:data.password});
+          if (user.length) {
+            console.log(data.password, user);
+              return res.json({
+                success: "success",
+                token: jwtService.createToken(user[0]),
+                user:user[0]
+              });
+          }else{
+            return res.json({ success: false });
+          }
+        } catch (error) {
+          console.log("error", error);
+        }
+      },
+
+    getUsers: async(req,res) => {
+        try {
+            let users = await Users.find({});
+            return res.json({success:true, users:users})
+          } catch (error) {
+            return res.json({success:false})
+          }
     }
 }
