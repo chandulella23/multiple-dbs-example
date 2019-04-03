@@ -4,12 +4,10 @@ const userSchema = new mongoose.Schema(
     {
         _id: {
             type : String,
-            unique: true
         },
 
         id: {
             type: Number,
-            unique: true
         },
         name: {
             type: String,
@@ -87,6 +85,10 @@ const userSchema = new mongoose.Schema(
                     default: ''
                 },
             }
+        },
+        userImage: {
+            type: String,
+            default: null
         }
     },
     {

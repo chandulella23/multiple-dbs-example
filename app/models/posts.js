@@ -5,11 +5,9 @@ const postSchema = new mongoose.Schema(
 
         id: {
             type: Number,
-            unique: true
         },
         userId: {
             type: Number,
-            unique: true
         },
         title: {
             type: String,
@@ -21,7 +19,7 @@ const postSchema = new mongoose.Schema(
             trim: true,
         },
         comments: [{
-            type: Number,
+            type: Object,
             ref: 'comments'
         }]
     },

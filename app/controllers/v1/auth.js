@@ -1,5 +1,5 @@
-var jwt = require('jsonwebtoken');
-var secret = 'chandu@sai';
+const jwt = require('jsonwebtoken');
+const secret = 'chandu@sai'; //make sure you place your secret key in .env file
 module.exports ={
     createToken : (user)=>{
         let today = new Date();
@@ -7,9 +7,8 @@ module.exports ={
         exp.setDate(today.getDate()+60);
     
         return jwt.sign({
-            id: user._id,
+            _id: user._id,
             email: user.email,
-            role:user.role,
             exp: parseInt(exp.getTime() / 1000),
         }, secret);
     }

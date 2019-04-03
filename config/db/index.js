@@ -6,7 +6,7 @@ module.exports =  async(url_variable)=> {
     },
         (err, db) => {
             if (!err) {
-                console.log('Database connected successfully', db);
+                console.log('Database connected successfully',url_variable);
             } else {
                 console.log('mongoose connection failed')
             }
